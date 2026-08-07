@@ -1,0 +1,9 @@
+# Copy this file to hyprpaper.conf and replace the wallpaper path.
+wallpaper {
+    monitor =
+    path = /absolute/path/to/wallpaper.jpg
+    fit_mode = cover
+}
+
+splash = false
+ipc = true

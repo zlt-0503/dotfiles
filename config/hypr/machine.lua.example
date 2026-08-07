@@ -1,0 +1,15 @@
+return {
+    monitors = {
+        {
+            output = "",
+            mode = "preferred",
+            position = "auto",
+            scale = "auto",
+        },
+    },
+
+    -- Add only programs installed on this machine.
+    autostart = {
+        "fcitx5 -d",
+    },
+}

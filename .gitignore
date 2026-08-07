@@ -1,0 +1,17 @@
+# Host-specific Hyprland settings
+/config/hypr/machine.lua
+/config/hypr/hyprpaper.conf
+
+# Generated Fcitx5 state and user dictionaries
+/config/fcitx5/conf/cached_layouts
+/config/fcitx5/rime/build/
+/config/fcitx5/rime/*.userdb/
+/config/fcitx5/rime/*.userdb.kct
+
+# Editor, backup, and compiled shell files
+*~
+*.bak
+*.backup-*
+*.swp
+*.zwc
+.DS_Store
