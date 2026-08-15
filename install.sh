@@ -27,6 +27,7 @@ let
 in
 (flake.lib.mkFedoraHome {
   inherit username homeDirectory;
+  dotfilesDirectory = flakeRef;
 }).activationPackage
 '
 
@@ -165,6 +166,7 @@ scan_conflicts() {
     prepare_directory "$config_home/hypr" "config/hypr" "hyprland.lua" true
     prepare_directory "$config_home/zsh" "config/zsh" "common.zsh"
     prepare_directory "$config_home/kitty" "config/kitty" "kitty.conf"
+    prepare_directory "$config_home/nvim" "config/nvim" "init.lua"
     prepare_directory "$config_home/tmux" "config/tmux" "tmux.conf"
     prepare_directory \
         "$data_home/fcitx5/themes/catppuccin-mocha-blue" \

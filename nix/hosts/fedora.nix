@@ -1,5 +1,6 @@
 {
   config,
+  dotfilesDirectory,
   homeDirectory,
   username,
   ...
@@ -9,6 +10,7 @@
     ../modules/desktop.nix
     ../modules/packages.nix
     ../modules/shell.nix
+    ../../config/nvim/nix/home-manager.nix
   ];
 
   home = {
@@ -21,6 +23,15 @@
   targets.genericLinux.enable = true;
 
   programs.home-manager.enable = true;
+
+  sorasuka.neovim = {
+    enable = true;
+    source =
+      if dotfilesDirectory == null then
+        null
+      else
+        "${dotfilesDirectory}/config/nvim";
+  };
 
   assertions = [
     {

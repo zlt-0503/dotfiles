@@ -2,6 +2,9 @@
   description = "Reusable Fedora dotfiles managed by Home Manager";
 
   inputs = {
+    # Nix 2.27+ can include checked-out Git submodules in the root flake source.
+    self.submodules = true;
+
     # Use shallow HTTPS Git inputs instead of the GitHub API shorthand. This
     # avoids unauthenticated API rate limits while flake.lock still pins exact
     # commits and content hashes.
@@ -24,11 +27,12 @@
         {
           username,
           homeDirectory ? "/home/${username}",
+          dotfilesDirectory ? null,
         }:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit username homeDirectory;
+            inherit username homeDirectory dotfilesDirectory;
           };
           modules = [ ./nix/hosts/fedora.nix ];
         };

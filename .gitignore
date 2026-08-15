@@ -6,6 +6,7 @@
 # Repository files
 !/.gitignore
 !/.gitattributes
+!/.gitmodules
 !/*.md
 !/*.nix
 !/*.lock
