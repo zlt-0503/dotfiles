@@ -1,3 +1,22 @@
+# Ignore every file by default, but keep directories visible so Git can reach
+# the explicitly allowed paths below.
+*
+!*/
+
+# Repository files
+!/.gitignore
+!/.gitattributes
+!/*.md
+!/*.nix
+!/*.lock
+!/*.sh
+
+# Nix-managed dotfile trees
+!/config/**
+!/data/**
+!/home/**
+!/nix/**
+
 # Host-specific Hyprland settings
 /config/hypr/machine.lua
 /config/hypr/hyprpaper.conf

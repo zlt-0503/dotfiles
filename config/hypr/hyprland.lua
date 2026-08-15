@@ -1,6 +1,7 @@
 -- Hyprland 0.56 configuration migrated from hyprland.conf.
 
 local mainMod = "SUPER"
+local zenCommand = "gtk-launch zen"
 
 -- Session-wide environment is loaded by UWSM from ~/.config/uwsm/env and
 -- ~/.config/uwsm/env-hyprland before the compositor starts.
@@ -26,10 +27,10 @@ for _, monitor in ipairs(monitors) do
 end
 
 -- The hyprland.start event is emitted once per compositor start, not on every
--- config reload. UWSM finalization is portable; the remaining commands are
--- selected in the local machine file.
+-- config reload. Keep host-specific commands in the local machine file.
 hl.on("hyprland.start", function()
     hl.exec_cmd("uwsm finalize")
+    hl.exec_cmd(zenCommand)
     for _, command in ipairs(machine.autostart or {}) do
         hl.exec_cmd(command)
     end
@@ -160,11 +161,11 @@ hl.window_rule({ match = { class = "^(blueman-manager)$" }, float = true, center
 hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true, center = true })
 
 -- Launchers and basic controls.
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("wofi --show drun"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/app-menu.sh"))
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd("~/.config/hypr/scripts/tmux-terminal.sh"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-launch.sh Mattermost mattermost-desktop"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("gtk-launch zen"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-launch.sh zen " .. zenCommand))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-launch.sh code code"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("hyprlock"))
@@ -236,15 +237,15 @@ hl.bind(mainMod .. " + SHIFT + C", hl.dsp.workspace.toggle_special("clash-verge"
 
 -- Media and brightness keys. Both the legacy pamixer and PipeWire bindings are
 -- retained because both were present in the old config.
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"))
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"))
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pamixer -t"))
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +10%"))
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/pamixer-volume.sh up"))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/pamixer-volume.sh down"))
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("~/.config/hypr/scripts/pamixer-volume.sh mute"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("~/.config/hypr/scripts/brightness.sh up"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/hypr/scripts/brightness.sh down"))
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"))
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"))
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 
 -- Screenshots.
-hl.bind("Print", hl.dsp.exec_cmd("mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/shot-$(date +%F_%H-%M-%S).png"))
-hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/shot-$(date +%F_%H-%M-%S).png"))
+hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh full"))
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh region"))

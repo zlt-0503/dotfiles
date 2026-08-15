@@ -25,3 +25,4 @@ alias psmem='ps auxf | sort -nr -k 4'
 alias pscpu='ps auxf | sort -nr -k 3'
 
 alias y='yazi'
+alias cat='bat'
